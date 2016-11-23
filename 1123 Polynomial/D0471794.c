@@ -5,10 +5,10 @@ typedef struct POLY{
 	int coef, pow;
 	struct POLY *next;
 }Poly;
-
-void print(Poly *a);
-void add(Poly **a, Poly *b);
-void insert(Poly **head, int coef, int pow);
+ 
+void print(Poly *a);	//印出多項式 
+void add(Poly **a, Poly *b);	//把b多項式加在a (a += b) 
+void insert(Poly **head, int coef, int pow);	//插入單項式 
 
 void main(){
 	Poly *a = NULL, *b = NULL;
@@ -16,6 +16,7 @@ void main(){
 	
 	printf("input 0 0 to stop\n\n");
 	
+	//輸入多項式A 
 	do{
 		printf("a - input ( coef pow ) : ");
 		scanf(" %d %d", &c, &p);
@@ -25,6 +26,7 @@ void main(){
 	print(a);
 	printf("\n");
 	
+	//輸入多項式B 
 	do{
 		printf("b - input ( coef pow ) : ");
 		scanf(" %d %d", &c, &p);
@@ -34,6 +36,7 @@ void main(){
 	print(b);
 	printf("\n");
 	
+	//多項式相加 
 	add(&a, b);
 	printf("ans = ");
 	print(a);
