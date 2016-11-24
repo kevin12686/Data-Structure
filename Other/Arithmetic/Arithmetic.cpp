@@ -3,7 +3,7 @@
 using namespace std;
 /*
 	五則運算 a017
-	後續式運算、stringstring
+	後續式運算、stringstream
 	
 	輸入範例 : "2 + 5 + 6 ( 3 + 2 ) * 6 / 5 % 20"		注意：中間有空格 
 	結束時按 Ctrl + Z 然後按下 Enter 
