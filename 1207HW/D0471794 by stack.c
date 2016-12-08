@@ -22,6 +22,7 @@ void main(){
 	prefix(s);
 	printf("\n postfix : ");
 	postfix(s);
+	printf("\n\n ");
 	system("pause");
 }
 
@@ -61,7 +62,8 @@ void show(){
 void prefix(char *s){
 	top = -1;
 	int i = 0, len = strlen(s), temp = len + 1;
-	char out[len];
+	char out[len + 1];
+	out[len] = '\0';
 	for(i = len; i > -1; i--){
 		if(isop(s[i])){
 			if(top == -1){

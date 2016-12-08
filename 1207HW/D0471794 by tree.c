@@ -11,12 +11,11 @@ int isop(char);
 void push(char);
 char pop(void);
 int weight(char);
-void postfix(char*, char*);
-tree* getnode(char);
-void init(tree**, char*);
+void prefix(char*, char*);
+tree* init(char*, int*);
 void preorder(tree*);
-void postorder(tree*);
 void inorder(tree*);
+void postorder(tree*);
 
 char op[] = {'+', '-', '*', '/'};
 int opw[] = {0, 0, 1, 1};
@@ -25,17 +24,21 @@ int top = -1;
 
 void main(){
 	tree *head = NULL;
+	int i = 0;
 	char s[30], in[30];
 	printf(" Input Infix : ");
 	gets(s);
-	postfix(s, in);
-	init(&head, in);
+	prefix(s, in);
+	head = init(in, &i);
 	printf(" prefix : ");
 	preorder(head);
+	printf("\n infix : ");
+	inorder(head);
 	printf("\n postfix : ");
 	postorder(head);
 	printf("\n ");
 	system("pause");
+	
 }
 
 int isop(char c){
@@ -68,53 +71,38 @@ int weight(char c){
 	return -1;
 }
 
-void postfix(char *s, char *in){
+void prefix(char *s, char *out){
 	top = -1;
-	int i = 0, len = strlen(s), temp = 0;;
-	for(; i < len; i++){
+	int i = 0, len = strlen(s), temp = len + 1;
+	out[len] = '\0';
+	for(i = len; i > -1; i--){
 		if(isop(s[i])){
 			if(top == -1){
 				push(s[i]);
 			}
 			else{
-				while(weight(stack[top]) >= weight(s[i]))	in[temp++] = pop();
+				
+				while(weight(stack[top]) > weight(s[i]))	out[--temp] = pop();
 				push(s[i]);
 			}
 		}
-		else	in[temp++] = s[i];
+		else	out[--temp] = s[i];
 	}
-	while(top > -1)	in[temp++] = pop();
-	in[temp] = '\n';
+	while(top > -1)	out[--temp] = pop();
 }
 
-tree* getnode(char c){
+tree* init(char *s, int *zero){
 	tree *temp = (tree*)malloc(sizeof(tree));
-	temp->data = c;
-	temp->left = NULL;
-	temp->right = NULL;
-	return temp;
-}
-
-
-void init(tree **head, char *s){
-	top = -1;
-	int i, len = strlen(s);
-	for(i = 0; i < len; i++){
-		if(!isop(s[i])){
-			push(s[i]);
-		}
-		else if(*head != NULL){
-			tree *flag = *head;
-			*head = getnode(s[i]);
-			(*head)->left = flag;
-			(*head)->right = getnode(pop());
-		}
-		else{
-			*head = getnode(s[i]);
-			(*head)->left = getnode(pop());
-			(*head)->right = getnode(pop());
-		}
+	temp->data = s[*zero];
+	(*zero)++;
+	if(!isop(s[(*zero)-1])){
+		temp->left = NULL;
+		temp->right = NULL;
+		return temp;
 	}
+	temp->left = init(s, zero);
+	temp->right = init(s, zero);
+	return temp;
 }
 
 void preorder(tree *head){
@@ -122,6 +110,14 @@ void preorder(tree *head){
 		putchar(head->data);
 		preorder(head->left);
 		preorder(head->right);
+	}
+}
+
+void inorder(tree *head){
+	if(head != NULL){
+		inorder(head->left);
+		putchar(head->data);
+		inorder(head->right);	
 	}
 }
 
@@ -133,10 +129,3 @@ void postorder(tree *head){
 	}
 }
 
-void inorder(tree *head){
-	if(head != NULL){
-		inorder(head->left);
-		putchar(head->data);
-		inorder(head->right);	
-	}
-}
