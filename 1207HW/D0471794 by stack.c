@@ -22,6 +22,7 @@ void main(){
 	prefix(s);
 	printf("\n postfix : ");
 	postfix(s);
+	system("pause");
 }
 
 void push(char c){
