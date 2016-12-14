@@ -17,6 +17,7 @@ void main(){
 		while(fscanf(in, " %d", &read) != EOF){
 			count = add(array, count + 1, read);
 		}
+		fclose(in);
 		print(array, count + 1);
 		while(flag){
 			printf("1. add, 2. del, 3. stop -> ");
