@@ -88,8 +88,9 @@ int getNode(int *array, int i, char c){
 }
 
 void refresh(int *array, int i){
-	while(i != 0){
+	while(i > 0){
 		if(array[i] > getNode(array, i, 'f'))	swapNode(array, i, 'f');
+		else	break;
 		i = (i - 1) / 2;
 	}
 }
