@@ -97,7 +97,7 @@ void refresh(int *array, int i){
 }
 
 void refresh_s(int *array, int i, int size){
-	while(i <= (size - 1) / 2){
+	while(i < (size - 1) / 2){
 		if(array[i] < getNode(array, i, 'l') || array[i] < getNode(array, i, 'r')){
 			if(getNode(array, i, 'l') > getNode(array, i , 'r')){
 				swapNode(array, i, 'l');
